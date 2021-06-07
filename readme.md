@@ -3,21 +3,31 @@
 # Installation
 
 ```sh
-npm install <package> --save
+npm install lesca-image-onloader --save
 ```
 
 # Usage
 
 ```javascript
-import foo from 'foo';
+import ImageOnloader from 'lesca-image-onloader';
+
+new ImageOnloader(container.current, {
+	hideBeforeLoaded: true,
+	onUpdate: (e) => {
+		const { loaded, total } = e;
+		const percent = (loaded / total) * 100;
+		loadingBar.style.width = `${percent}%`;
+	},
+}).then((e) => {
+	loadingBar.style.width = `100%`;
+});
 ```
 
 # Methods
 
-| method | options | description | default |
-| :----- | :-----: | :---------: | ------: |
-
-# Properties
-
-| Properties | type | description | default |
-| :--------- | :--: | :---------: | ------: |
+| method                    |     options      |             description             | default |
+| :------------------------ | :--------------: | :---------------------------------: | ------: |
+| constructor(dom, options) |                  |                                     |         |
+| dom                       |    HTML Node     |   getElementById('container')[0]    |         |
+| options                   |     onUpdate     |     call when each image loaded     |         |
+|                           | hideBeforeLoaded | set display when start and complete |    true |
