@@ -3,15 +3,15 @@
 # Installation
 
 ```sh
-npm install lesca-image-onloader --save
+npm install lesca-image-onload --save
 ```
 
 # Usage
 
 ```javascript
-import ImageOnloader from 'lesca-image-onloader';
+import ImageOnload from 'lesca-image-onload';
 
-new ImageOnloader(container.current, {
+new ImageOnload(container.current, {
 	hideBeforeLoaded: true,
 	onUpdate: (e) => {
 		const { loaded, total } = e;
