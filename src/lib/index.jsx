@@ -18,7 +18,8 @@ export default class ImagePreloader {
 
 		if (hideBeforeLoaded) this.target.style.display = 'none';
 
-		const elements = [...this.target.querySelectorAll('*')];
+		const elements = [this.target, ...this.target.querySelectorAll('*')];
+
 		this.result = [];
 
 		this.urls = elements.filter((e, index) => {
@@ -30,6 +31,10 @@ export default class ImagePreloader {
 				.replace(/url\((['"])?(.*?)\1\)/gi, '$2')
 				.split(',')[0];
 
+			const maskImage = (e.currentStyle || window.getComputedStyle(e, false))['-webkit-mask-image']
+				.replace(/url\((['"])?(.*?)\1\)/gi, '$2')
+				.split(',')[0];
+
 			const status = 'unload';
 
 			if (tag === 'IMG' && src) {
@@ -38,7 +43,10 @@ export default class ImagePreloader {
 			} else if (tag === 'DIV' && backgroundImage !== 'none') {
 				this.result.push({ url: backgroundImage, index, status });
 				return true;
+			} else if (tag === 'DIV' && maskImage !== 'none') {
+				this.result.push({ url: maskImage, index, status });
 			}
+
 			return false;
 		});
 

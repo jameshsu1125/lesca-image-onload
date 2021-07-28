@@ -27,7 +27,7 @@ module.exports = {
 				use: [
 					{
 						loader: 'file-loader',
-						options: { name: 'img/[path][name].[ext]', context: 'src/docs' },
+						options: { name: 'img/[path][name].[ext]', context: 'src/docs', esModule: false },
 					},
 				],
 			},
