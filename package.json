@@ -1,6 +1,6 @@
 {
 	"name": "lesca-image-onload",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"description": "div background-image onload event",
 	"main": "lib/index.js",
 	"scripts": {

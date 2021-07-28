@@ -1,8 +1,6 @@
 const defaultOptions = {
 	hideBeforeLoaded: true,
-	onUpdate: (e) => {
-		console.log(e);
-	},
+	onUpdate: (e) => {},
 };
 
 export default class ImagePreloader {
