@@ -40,7 +40,11 @@ export default class ImagePreloader {
 			if (tag === 'IMG' && src) {
 				this.result.push({ url: src, index, status });
 				return true;
-			} else if (tag === 'DIV' && backgroundImage !== 'none') {
+			} else if (
+				tag === 'DIV' &&
+				backgroundImage !== 'none' &&
+				backgroundImage.indexOf('http') >= 0
+			) {
 				this.result.push({ url: backgroundImage, index, status });
 				return true;
 			} else if (tag === 'DIV' && maskImage !== 'none') {
