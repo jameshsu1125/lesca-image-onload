@@ -9,6 +9,23 @@ const codes = [
     code: `npm install ${name} --save`,
     type: 'text',
   },
+  {
+    title: '2. Installation',
+    code: `import ImageOnload from '${name}';
+
+new ImageOnload(container, {
+  hideBeforeLoaded: true,
+  onUpdate: (e) => {
+    const { loaded, total } = e;
+    const percent = (loaded / total) * 100;
+    
+    console.log(percent); // 0~100
+  },
+}).then((e) => {
+  // all images loaded
+});`,
+    type: 'js',
+  },
 ];
 
 const Usage = () => {
@@ -22,9 +39,6 @@ const Usage = () => {
           <Code code={e.code} theme={e.type} />
         </div>
       ))}
-      <ButtonGroup variant='contained'>
-        <Button>click</Button>
-      </ButtonGroup>
     </div>
   );
 };
