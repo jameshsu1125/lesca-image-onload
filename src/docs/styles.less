@@ -1,82 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora&display=swap&css');
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap&css');
+@import url('./theme.less');
+
 body {
-	background: #eee;
-	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-	margin: 0;
+  margin: 0;
+  background-color: @C4;
+  color: @C5;
+  font-family: 'Titillium Web', sans-serif;
 
-	.container {
-		@img: 'https://fakeimg.pl/250x100/';
-		background-image: url(@img);
-		width: 100vw;
-		height: 100vh;
+  overscroll-behavior: none;
+}
 
-		& > div {
-			width: 300px;
-			height: 300px;
-			float: left;
-		}
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: 100%;
 
-		.a {
-			background-image: url(https://fakeimg.pl/300x300/ff0000/000);
+  & > div {
+    margin: 5px;
+    width: image-width(@img);
+    height: image-height(@img);
+    background-size: cover;
 
-			& > div {
-				width: 100px;
-				height: 100px;
-				float: left;
-				background-size: cover;
-			}
+    @img: './img/100x100.png';
+  }
 
-			.a-1 {
-				background-image: url('./100x100.png');
-			}
-			.a-2 {
-				background: linear-gradient(
-					45deg,
-					rgba(0, 0, 0, 1) 0%,
-					rgba(0, 0, 0, 1) 5%,
-					rgba(51, 51, 51, 1) 6%,
-					rgba(51, 51, 51, 1) 10%,
-					rgba(102, 102, 102, 1) 11%,
-					rgba(102, 102, 102, 1) 15%,
-					rgba(153, 153, 153, 1) 16%,
-					rgba(153, 153, 153, 1) 20%,
-					rgba(102, 102, 102, 1) 21%,
-					rgba(102, 102, 102, 1) 25%,
-					rgba(51, 51, 51, 1) 26%,
-					rgba(51, 51, 51, 1) 30%,
-					rgba(0, 0, 0, 1) 31%,
-					rgba(0, 0, 0, 1) 35%,
-					rgba(0, 0, 0, 1) 100%
-				);
-			}
-			.a-3 {
-				background-image: url(https://fakeimg.pl/300x300/660000/000);
-			}
-		}
+  & > div:nth-child(1) {
+    background-image: url(@img);
 
-		.b {
-			background-image: url(https://fakeimg.pl/300x300/ff6600/000);
-		}
+    @img: './img/A.png';
+  }
 
-		.c {
-			background-image: url(https://fakeimg.pl/300x300/ffff00/000);
-		}
-	}
+  & > div:nth-child(2) {
+    background-image: url(@img);
 
-	.loading {
-		position: absolute;
-		width: 100px;
-		height: 5px;
-		background-color: gray;
-		left: 50%;
-		top: 50%;
-		margin-top: -5px/2;
-		margin-left: -100px/2;
+    @img: './img/B.png';
+  }
 
-		.bar {
-			float: left;
-			width: 0%;
-			height: 100%;
-			background-color: greenyellow;
-		}
-	}
+  & > div:nth-child(3) {
+    background-image: url(@img);
+
+    @img: './img/C.png';
+  }
+
+  & > div:nth-child(4) {
+    background-image: url(@img);
+
+    @img: './img/D.png';
+  }
+
+  & > div:nth-child(5) {
+    background-image: url(@img);
+
+    @img: './img/E.png';
+  }
+
+  & > div:nth-child(6) {
+    background-image: url(@img);
+
+    @img: './img/F.png';
+  }
+
+  & > div:nth-child(7) {
+    background-image: url(@img);
+
+    @img: './img/G.png';
+  }
+
+  & > div:nth-child(8) {
+    background-image: url(@img);
+
+    @img: './img/H.png';
+  }
+
+  & > div:nth-child(9) {
+    background-image: url(@img);
+
+    @img: './img/I.png';
+  }
 }
