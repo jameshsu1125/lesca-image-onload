@@ -13,17 +13,20 @@ const codes = [
     title: '2. Installation',
     code: `import ImageOnload from '${name}';
 
-new ImageOnload(container, {
-  hideBeforeLoaded: true,
-  onUpdate: (e) => {
-    const { loaded, total } = e;
-    const percent = (loaded / total) * 100;
-    
-    console.log(percent); // 0~100
-  },
-}).then((e) => {
-  // all images loaded
-});`,
+const onload = new ImageOnload();
+onload
+  .load(containerRef.current, {
+    hideBeforeLoaded: true,
+    onUpdate: (e) => {
+      const { loaded, total } = e;
+      const percent = (loaded / total) * 100;
+      
+      console.log(percent); // 0~100
+    },
+  })
+  .then((e) => {
+    // all images loaded
+  });`,
     type: 'js',
   },
 ];

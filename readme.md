@@ -23,25 +23,28 @@ npm install lesca-image-onload --save
 ```javascript
 import ImageOnload from 'lesca-image-onload';
 
-new ImageOnload(container.current, {
-  hideBeforeLoaded: true,
-  onUpdate: (e) => {
+new ImageOnload()
+  .load(containerRef.current, {
+    hideBeforeLoaded: true,
+    onUpdate: (e) => {
+      const { loaded, total } = e;
+      const percent = (loaded / total) * 100; // 0~9x
+    },
+  })
+  .then((e) => {
     const { loaded, total } = e;
-    const percent = (loaded / total) * 100;
-    loadingBar.style.width = `${percent}%`;
-  },
-}).then((e) => {
-  loadingBar.style.width = `100%`;
-});
+    const percent = (loaded / total) * 100; // 100
+  });
 ```
 
 ## Development
 
 ### Methods
 
-| method                                                            |      description      |  return |
-| :---------------------------------------------------------------- | :-------------------: | ------: |
-| .**constructor**(**dom**:_DOM_, **[options](#options)**:_object_) | Load HTML node images | Promise |
+| method                                                     |      description      |  return |
+| :--------------------------------------------------------- | :-------------------: | ------: |
+| .**constructor**()                                         |       new class       |   class |
+| .**load**(**dom**:_DOM_, **[options](#options)**:_object_) | Load HTML node images | Promise |
 
 ### options
 
@@ -52,6 +55,5 @@ new ImageOnload(container.current, {
 
 ### Features
 
-- TypeScript
 - add React hook
 - maintain if necessary

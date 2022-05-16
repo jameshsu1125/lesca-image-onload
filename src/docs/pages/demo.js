@@ -1,6 +1,6 @@
 import { Button, ButtonGroup, Box, LinearProgress, Typography } from '@mui/material';
 import { useEffect, useState, useRef } from 'react';
-import ImageOnload from '../../lib';
+import ImageOnload from '../../../lib/index';
 
 const Demo = () => {
   const containerRef = useRef();
@@ -8,18 +8,20 @@ const Demo = () => {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    new ImageOnload(containerRef.current, {
-      hideBeforeLoaded: false,
-      onUpdate: (e) => {
+    new ImageOnload()
+      .load(containerRef.current, {
+        hideBeforeLoaded: true,
+        onUpdate: (e) => {
+          const { loaded, total } = e;
+          setState(Math.floor((loaded / total) * 100));
+          setMessage((c) => JSON.stringify(e) + '\n' + c);
+        },
+      })
+      .then((e) => {
         const { loaded, total } = e;
         setState(Math.floor((loaded / total) * 100));
         setMessage((c) => JSON.stringify(e) + '\n' + c);
-      },
-    }).then((e) => {
-      const { loaded, total } = e;
-      setState(Math.floor((loaded / total) * 100));
-      setMessage((c) => JSON.stringify(e) + '\n' + c);
-    });
+      });
   }, []);
 
   return (
