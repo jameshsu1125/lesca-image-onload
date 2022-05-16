@@ -1,8 +1,6 @@
 const defaultOptions = {
   hideBeforeLoaded: true,
-  onUpdate: (e: Object) => {
-    console.log(e);
-  },
+  onUpdate: (e: Object) => {},
 };
 
 enum Status {
