@@ -87,7 +87,7 @@ export default class ImagePreloader {
         const loaded = this.result.filter((e) => e.status === Status.loaded).length;
         if (total === loaded) {
           if (hideBeforeLoaded) target.style.display = display;
-          resolve({ url, total, loaded, index });
+          requestAnimationFrame(() => resolve({ url, total, loaded, index }));
         } else {
           onUpdate({ url, total, loaded, index });
           this.index++;

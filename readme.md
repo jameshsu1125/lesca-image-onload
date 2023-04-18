@@ -50,7 +50,7 @@ new ImageOnload()
 
 | Properties                     |              description              |                                                                   return |
 | :----------------------------- | :-----------------------------------: | -----------------------------------------------------------------------: |
-| **onUpdate**:_funcion_         |   callback for each image onloaded    | { **url**:_string_, **index**:_int_, **total**:_int_, **loaded**:_int_ } |
+| **onUpdate**:_function_        |    callback for each image onload     | { **url**:_string_, **index**:_int_, **total**:_int_, **loaded**:_int_ } |
 | **hideBeforeLoaded**:_boolean_ | set root node style display to 'none' |                                                       default = **true** |
 
 ### Features
