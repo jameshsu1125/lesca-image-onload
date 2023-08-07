@@ -78,6 +78,8 @@ export default class ImagePreloader {
       const data = this.result[this.index];
       const total = this.result.length;
 
+      console.log(total);
+
       const { url, index } = data;
       data.status = Status.loading;
 

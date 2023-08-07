@@ -29,7 +29,7 @@ const Demo = () => {
       <h2>Demo</h2>
 
       <div className='container' ref={containerRef}>
-        {[...new Array(10).keys()].map((e) => (
+        {[...new Array(0).keys()].map((e) => (
           <div key={e} />
         ))}
       </div>
