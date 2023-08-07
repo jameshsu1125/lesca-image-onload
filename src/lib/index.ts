@@ -107,6 +107,8 @@ export default class ImagePreloader {
   getStyle(el: Element | any, styleProp: string): string {
     let value;
     const defaultView = el.ownerDocument.defaultView;
+    console.log(el);
+
     if (defaultView && defaultView.getComputedStyle) {
       styleProp = styleProp.replace(/([A-Z])/g, '-$1').toLowerCase();
       return defaultView.getComputedStyle(el, null).getPropertyValue(styleProp);
