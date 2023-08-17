@@ -71,14 +71,13 @@ export default class ImagePreloader {
       reject = (res: Object) => console.log(res),
     }) => {
       if (this.result.length === 0) {
+        if (hideBeforeLoaded) target.style.display = display;
         resolve({ total: 0, loaded: 0 });
         return;
       }
 
       const data = this.result[this.index];
       const total = this.result.length;
-
-      console.log(total);
 
       const { url, index } = data;
       data.status = Status.loading;
@@ -107,7 +106,6 @@ export default class ImagePreloader {
   getStyle(el: Element | any, styleProp: string): string {
     let value;
     const defaultView = el.ownerDocument.defaultView;
-    console.log(el);
 
     if (defaultView && defaultView.getComputedStyle) {
       styleProp = styleProp.replace(/([A-Z])/g, '-$1').toLowerCase();
