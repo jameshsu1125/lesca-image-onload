@@ -27,9 +27,6 @@ const Menu = ({ setState, state }) => (
 const Navigation = ({ setState, state }) => (
   <div className='Navigation'>
     <div className='logo'>{name}</div>
-    <div className='menu'>
-      <Menu setState={setState} state={state} />
-    </div>
   </div>
 );
 export default Navigation;

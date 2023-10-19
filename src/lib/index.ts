@@ -30,7 +30,9 @@ export default class ImagePreloader {
     this.result = [];
   }
 
-  load(target: HTMLElement, options: object = defaultOptions) {
+  load(target: HTMLElement | null, options: object = defaultOptions) {
+    if (!target) return false;
+
     const opt = { ...defaultOptions, ...options };
     const { onUpdate, hideBeforeLoaded } = opt;
 

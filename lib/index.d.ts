@@ -8,6 +8,6 @@ export default class ImagePreloader {
      * @returns Promise
      */
     constructor();
-    load(target: HTMLElement, options?: object): Promise<unknown>;
+    load(target: HTMLElement | null, options?: object): false | Promise<unknown>;
     getStyle(el: Element | any, styleProp: string): string;
 }

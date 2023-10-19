@@ -6,7 +6,6 @@ const Demo = () => {
   const containerRef = useRef();
   const [state, setState] = useState(0);
   const [message, setMessage] = useState('');
-
   useEffect(() => {
     new ImageOnload()
       .load(containerRef.current, {
@@ -29,7 +28,7 @@ const Demo = () => {
       <h2>Demo</h2>
 
       <div className='container' ref={containerRef}>
-        {[...new Array(0).keys()].map((e) => (
+        {[...new Array(10).keys()].map((e) => (
           <div key={e} />
         ))}
       </div>
@@ -43,7 +42,9 @@ const Demo = () => {
           <LinearProgress variant='determinate' value={state} />
         </Box>
         <Box minWidth={35}>
-          <Typography variant='body2' color='textSecondary'>{`${Math.round(state)}%`}</Typography>
+          <Typography variant='body2' color='textSecondary'>{`${
+            Math.round(state) | 0
+          }%`}</Typography>
         </Box>
       </Box>
     </div>
