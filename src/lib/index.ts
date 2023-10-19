@@ -1,28 +1,18 @@
+import { Item, Options, Result, Status } from './type';
+
 const defaultOptions = {
   hideBeforeLoaded: true,
-  onUpdate: (e: Object) => {},
-};
-
-enum Status {
-  unload,
-  loading,
-  loaded,
-}
-
-type ITEM = {
-  url: string;
-  index: Number;
-  status: Status;
+  onUpdate: (_: Result) => {},
 };
 
 export default class ImagePreloader {
   private index: number;
-  private result: ITEM[];
+  private result: Item[];
 
   /**
    * add event by dom background
    * @param {HTMLElement} target
-   * @param {object} options
+   * @param {Options} options
    * @returns Promise
    */
   constructor() {
@@ -30,8 +20,12 @@ export default class ImagePreloader {
     this.result = [];
   }
 
-  load(target: HTMLElement | null, options: object = defaultOptions) {
-    if (!target) return false;
+  load(target: HTMLElement | null, options: Options = defaultOptions) {
+    if (!target) {
+      return new Promise<Result>((resolve) => {
+        resolve({ total: 0, loaded: 0 });
+      });
+    }
 
     const opt = { ...defaultOptions, ...options };
     const { onUpdate, hideBeforeLoaded } = opt;
@@ -69,8 +63,8 @@ export default class ImagePreloader {
     });
 
     const loadImage = ({
-      resolve = (res: Object) => console.log(res),
-      reject = (res: Object) => console.log(res),
+      resolve = (res: Result) => console.log(res),
+      reject = (res: Result) => console.log(res),
     }) => {
       if (this.result.length === 0) {
         if (hideBeforeLoaded) target.style.display = display;
@@ -100,7 +94,7 @@ export default class ImagePreloader {
       image.src = url;
     };
 
-    return new Promise((resolve, reject) => {
+    return new Promise<Result>((resolve, reject) => {
       loadImage({ resolve, reject });
     });
   }
