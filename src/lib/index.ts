@@ -38,22 +38,22 @@ export default class ImagePreloader {
     elements.forEach((e, index) => {
       const tag = e.tagName;
       const src = e.getAttribute('src');
-      const backgroundImage = this.getStyle(e, 'background-image')
-        .replace(/url\((['"])?(.*?)\1\)/gi, '$2')
-        .split(',')[0];
-      const maskImage = this.getStyle(e, '-webkit-mask-image')
-        .replace(/url\((['"])?(.*?)\1\)/gi, '$2')
-        .split(',')[0];
+
+      const backgroundImage = this.getStyle(e, 'background-image').replace(
+        /url\((['"])?(.*?)\1\)/gi,
+        '$2',
+      );
+
+      const maskImage = this.getStyle(e, '-webkit-mask-image').replace(
+        /url\((['"])?(.*?)\1\)/gi,
+        '$2',
+      );
 
       const status = Status.unload;
       if (tag === 'IMG' && src) {
         this.result.push({ url: src, index, status });
         return true;
-      } else if (
-        tag === 'DIV' &&
-        backgroundImage !== 'none' &&
-        backgroundImage.indexOf('http') >= 0
-      ) {
+      } else if (tag === 'DIV' && backgroundImage !== 'none') {
         this.result.push({ url: backgroundImage, index, status });
         return true;
       } else if (tag === 'DIV' && maskImage !== 'none') {
