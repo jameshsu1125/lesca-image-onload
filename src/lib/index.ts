@@ -35,6 +35,7 @@ export default class ImagePreloader {
 
     var node = Array.from(target.querySelectorAll('*'));
     const elements = [target, ...node];
+
     elements.forEach((e, index) => {
       const tag = e.tagName;
       const src = e.getAttribute('src');
@@ -54,7 +55,9 @@ export default class ImagePreloader {
         this.result.push({ url: src, index, status });
         return true;
       } else if (tag === 'DIV' && backgroundImage !== 'none') {
-        this.result.push({ url: backgroundImage, index, status });
+        if (!backgroundImage.includes('gradient')) {
+          this.result.push({ url: backgroundImage, index, status });
+        }
         return true;
       } else if (tag === 'DIV' && maskImage !== 'none') {
         this.result.push({ url: maskImage, index, status });
