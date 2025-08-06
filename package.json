@@ -1,10 +1,15 @@
 {
-  "name": "template-npm-vite",
+  "name": "lesca-image-onload",
+  "description": "a listener of css background image onload",
   "private": true,
-  "version": "0.0.0",
+  "version": "4.0.0",
   "type": "module",
   "files": [
     "lib"
+  ],
+  "keywords": [
+    "lesca",
+    "images onload"
   ],
   "main": "./lib/index.cjs",
   "module": "./lib/index.js",
