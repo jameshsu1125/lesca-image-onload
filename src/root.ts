@@ -8,6 +8,7 @@ const createApp = () => {
       const preloader = new ImagePreloader();
       preloader
         .load(a, {
+          onStart: (r) => console.log(r),
           onUpdate: (r) => {
             console.log(r);
           },

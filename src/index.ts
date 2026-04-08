@@ -3,6 +3,7 @@ import { Item, Options, Result, Status } from './type';
 const defaultOptions = {
   hideBeforeLoaded: true,
   onUpdate: (_: Result) => {},
+  onStart: (_: Pick<Result, 'total' | 'loaded'> & { urls: string[] }) => {},
 };
 
 export default class ImagePreloader {
@@ -28,7 +29,7 @@ export default class ImagePreloader {
     }
 
     const opt = { ...defaultOptions, ...options };
-    const { onUpdate, hideBeforeLoaded } = opt;
+    const { onUpdate, onStart, hideBeforeLoaded } = opt;
 
     const display = this.getStyle(target, 'display') === 'flex' ? 'flex' : 'block';
     if (hideBeforeLoaded) target.style.display = 'none';
@@ -88,6 +89,8 @@ export default class ImagePreloader {
         }
       }
     });
+
+    onStart({ total: this.result.length, loaded: 0, urls: this.result.map((item) => item.url) });
 
     const loadImage = ({
       resolve = (res: Result) => console.log(res),
