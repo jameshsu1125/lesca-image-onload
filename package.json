@@ -2,7 +2,7 @@
   "name": "lesca-image-onload",
   "description": "a listener of css background image onload",
   "private": false,
-  "version": "4.0.0",
+  "version": "4.1.0",
   "type": "module",
   "files": [
     "lib"

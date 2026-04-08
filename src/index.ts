@@ -50,19 +50,43 @@ export default class ImagePreloader {
         '$2',
       );
 
+      const beforeStyle = window.getComputedStyle(e, '::before');
+      const beforeBackgroundImage = beforeStyle
+        .getPropertyValue('background-image')
+        .replace(/url\((['"])?(.*?)\1\)/gi, '$2');
+
+      const afterStyle = window.getComputedStyle(e, '::after');
+      const afterBackgroundImage = afterStyle
+        .getPropertyValue('background-image')
+        .replace(/url\((['"])?(.*?)\1\)/gi, '$2');
+
       const status = Status.unload;
+
       if (tag === 'IMG' && src) {
         this.result.push({ url: src, index, status });
-        return true;
-      } else if (tag === 'DIV' && backgroundImage !== 'none') {
+      }
+
+      if (tag === 'DIV' && backgroundImage !== 'none') {
         if (!backgroundImage.includes('gradient')) {
           this.result.push({ url: backgroundImage, index, status });
         }
-        return true;
-      } else if (tag === 'DIV' && maskImage !== 'none') {
+      }
+
+      if (tag === 'DIV' && maskImage !== 'none') {
         this.result.push({ url: maskImage, index, status });
       }
-      return false;
+
+      if (tag === 'DIV' && beforeBackgroundImage !== 'none') {
+        if (!beforeBackgroundImage.includes('gradient')) {
+          this.result.push({ url: beforeBackgroundImage, index, status });
+        }
+      }
+
+      if (tag === 'DIV' && afterBackgroundImage !== 'none') {
+        if (!afterBackgroundImage.includes('gradient')) {
+          this.result.push({ url: afterBackgroundImage, index, status });
+        }
+      }
     });
 
     const loadImage = ({
