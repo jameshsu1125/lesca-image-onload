@@ -17,4 +17,7 @@ export interface Result {
 export type Options = {
     hideBeforeLoaded?: boolean;
     onUpdate?: (result: Result) => void;
+    onStart?: (result: Pick<Result, 'total' | 'loaded'> & {
+        urls: string[];
+    }) => void;
 };
