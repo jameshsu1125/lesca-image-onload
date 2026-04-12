@@ -1,7 +1,6 @@
 import { Item, Options, Result, Status } from './type';
 
 const defaultOptions = {
-  hideBeforeLoaded: true,
   onUpdate: (_: Result) => {},
   onStart: (_: Pick<Result, 'total' | 'loaded'> & { urls: string[] }) => {},
 };
@@ -9,33 +8,37 @@ const defaultOptions = {
 export default class ImagePreloader {
   private index: number;
   private result: Item[];
+  private target: HTMLElement | null;
+  private hideBeforeLoaded: boolean;
 
   /**
    * add event by dom background
-   * @param {HTMLElement} target
+   * @param {HTMLElement | null} target
    * @param {Options} options
    * @returns Promise
    */
-  constructor() {
+  constructor(target: HTMLElement | null, hideBeforeLoaded?: boolean) {
+    this.target = target;
+    this.hideBeforeLoaded = hideBeforeLoaded !== undefined ? hideBeforeLoaded : true;
     this.index = 0;
     this.result = [];
   }
 
-  load(target: HTMLElement | null, options: Options = defaultOptions) {
-    if (!target) {
+  load(options: Options = defaultOptions) {
+    if (!this.target) {
       return new Promise<Result>((resolve) => {
         resolve({ total: 0, loaded: 0 });
       });
     }
 
     const opt = { ...defaultOptions, ...options };
-    const { onUpdate, onStart, hideBeforeLoaded } = opt;
+    const { onUpdate, onStart } = opt;
 
-    const display = this.getStyle(target, 'display') === 'flex' ? 'flex' : 'block';
-    if (hideBeforeLoaded) target.style.display = 'none';
+    const display = this.getStyle(this.target, 'display') === 'flex' ? 'flex' : 'block';
+    if (this.hideBeforeLoaded) this.target.style.display = 'none';
 
-    var node = Array.from(target.querySelectorAll('*'));
-    const elements = [target, ...node];
+    var node = Array.from(this.target.querySelectorAll('*'));
+    const elements = [this.target, ...node];
 
     elements.forEach((e, index) => {
       const tag = e.tagName;
@@ -96,8 +99,13 @@ export default class ImagePreloader {
       resolve = (res: Result) => console.log(res),
       reject = (res: Result) => console.log(res),
     }) => {
+      if (this.target === null) {
+        reject({ total: this.result.length, loaded: 0 });
+        return;
+      }
+
       if (this.result.length === 0) {
-        if (hideBeforeLoaded) target.style.display = display;
+        if (this.hideBeforeLoaded) this.target.style.display = display;
         resolve({ total: 0, loaded: 0 });
         return;
       }
@@ -113,7 +121,7 @@ export default class ImagePreloader {
         data.status = Status.loaded;
         const loaded = this.result.filter((e) => e.status === Status.loaded).length;
         if (total === loaded) {
-          if (hideBeforeLoaded) target.style.display = display;
+          if (this.hideBeforeLoaded && this.target) this.target.style.display = display;
           requestAnimationFrame(() => resolve({ url, total, loaded, index }));
         } else {
           onUpdate({ url, total, loaded, index });
