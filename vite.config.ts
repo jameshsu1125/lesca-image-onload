@@ -1,50 +1,39 @@
-import { resolve } from "path";
-import { defineConfig } from "vite";
-import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
-import dtsPlugin from "vite-plugin-dts";
+import { resolve } from 'path';
+import { defineConfig } from 'vite';
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "./",
-  root: resolve(__dirname, "src"),
-  publicDir: resolve(__dirname, "public"),
+  base: './',
+  root: resolve(__dirname, 'src'),
+  publicDir: resolve(__dirname, 'public'),
   build: {
     emptyOutDir: true,
-    outDir: "../lib",
+    outDir: '../lib',
     lib: {
-      entry: resolve(__dirname, "src/index.ts"),
-      name: "index",
-      fileName: "index",
-      formats: ["es", "cjs"],
+      entry: resolve(__dirname, 'src/index.ts'),
+      name: 'index',
+      fileName: 'index',
+      formats: ['es', 'cjs'],
     },
   },
   css: {
     preprocessorOptions: {
       less: {
-        math: "always",
+        math: 'always',
         globalVars: {
-          mainColor: "red",
+          mainColor: 'red',
         },
       },
     },
   },
   resolve: {
     alias: {
-      "@": resolve(__dirname, "src"),
+      '@': resolve(__dirname, 'src'),
     },
   },
-  assetsInclude: [
-    "**/*.gltf",
-    "**/*.glb",
-    "**/*.png",
-    "**/*.jpg",
-    "**/*.jpeg",
-    "**/*.svg",
-  ],
-  plugins: [
-    cssInjectedByJsPlugin(),
-    dtsPlugin({ insertTypesEntry: true, outDir: "../lib" }),
-  ],
+  assetsInclude: ['**/*.gltf', '**/*.glb', '**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.svg'],
+  plugins: [cssInjectedByJsPlugin()],
   server: {
     open: true,
     port: 5173,
