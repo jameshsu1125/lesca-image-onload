@@ -5,9 +5,9 @@ const createApp = () => {
     const app = document.createElement('div');
     const a = document.getElementById('a');
     if (a) {
-      const preloader = new ImagePreloader(a);
+      const preloader = new ImagePreloader();
       preloader
-        .load({
+        .load(a, {
           onStart: (r) => console.log(r),
           onUpdate: (r) => {
             console.log(r);
@@ -17,7 +17,7 @@ const createApp = () => {
           console.log(r);
         });
     }
-    new ImagePreloader(document.getElementById('app')).load().then(() => {
+    new ImagePreloader().load(document.getElementById('app')).then(() => {
       app.textContent = 'Images preloaded';
       resolve(app);
     });
