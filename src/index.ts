@@ -1,28 +1,40 @@
+/* eslint-disable no-useless-escape */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Item, Options, Result, Status } from './type';
 
 const defaultOptions = {
-  hideBeforeLoaded: true,
-  onUpdate: (_: Result) => {},
-  onStart: (_: Pick<Result, 'total' | 'loaded'> & { urls: string[] }) => {},
+  onUpdate: (result: Result) => {
+    if (Date.now() < 100) console.log(result);
+  },
+  onStart: (result: Pick<Result, 'total' | 'loaded'> & { urls: string[] }) => {
+    if (Date.now() < 100) console.log(result);
+  },
 };
 
 export default class ImagePreloader {
   private index: number;
   private result: Item[];
+  private target: HTMLElement | null = null;
+  private hideBeforeLoaded: boolean = true;
 
   /**
    * add event by dom background
    * @param {HTMLElement} target
    * @param {Options} options
-   * @returns Promise
+   * @returns Promise<Result>
    */
-  constructor() {
+  constructor(target: HTMLElement | null, hideBeforeLoaded?: boolean) {
+    this.target = target;
+    if (hideBeforeLoaded !== undefined) {
+      this.hideBeforeLoaded = hideBeforeLoaded;
+    }
+
     this.index = 0;
     this.result = [];
   }
 
-  load(target: HTMLElement | null, options: Options = defaultOptions) {
-    if (!target) {
+  load(options: Options = defaultOptions) {
+    if (!this.target) {
       return new Promise<Result>((resolve) => {
         resolve({ total: 0, loaded: 0 });
       });
@@ -31,11 +43,11 @@ export default class ImagePreloader {
     const opt = { ...defaultOptions, ...options };
     const { onUpdate, onStart, hideBeforeLoaded } = opt;
 
-    const display = this.getStyle(target, 'display') === 'flex' ? 'flex' : 'block';
-    if (hideBeforeLoaded) target.style.display = 'none';
+    const display = this.getStyle(this.target, 'display') === 'flex' ? 'flex' : 'block';
+    if (hideBeforeLoaded) this.target.style.display = 'none';
 
-    var node = Array.from(target.querySelectorAll('*'));
-    const elements = [target, ...node];
+    const node = Array.from(this.target.querySelectorAll('*'));
+    const elements = [this.target, ...node];
 
     elements.forEach((e, index) => {
       const tag = e.tagName;
@@ -97,7 +109,7 @@ export default class ImagePreloader {
       reject = (res: Result) => console.log(res),
     }) => {
       if (this.result.length === 0) {
-        if (hideBeforeLoaded) target.style.display = display;
+        if (this.hideBeforeLoaded && this.target) this.target.style.display = display;
         resolve({ total: 0, loaded: 0 });
         return;
       }
@@ -113,7 +125,7 @@ export default class ImagePreloader {
         data.status = Status.loaded;
         const loaded = this.result.filter((e) => e.status === Status.loaded).length;
         if (total === loaded) {
-          if (hideBeforeLoaded) target.style.display = display;
+          if (this.hideBeforeLoaded && this.target) this.target.style.display = display;
           requestAnimationFrame(() => resolve({ url, total, loaded, index }));
         } else {
           onUpdate({ url, total, loaded, index });
